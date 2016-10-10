@@ -298,8 +298,13 @@ elRTE = function(target, opts) {
 				$(e.target).addClass('elrte-webkit-hl');
 			}
 		}).bind('keyup', function(e) {
-			$(self.doc.body).find('.elrte-webkit-hl').removeClass('elrte-webkit-hl');
-		})
+            if (e.keyCode == 46) {
+                // delete selected item
+                $(self.doc.body).find('.elrte-webkit-hl').remove();
+            } else {
+                $(self.doc.body).find('.elrte-webkit-hl').removeClass('elrte-webkit-hl');
+            }
+		});
 	}
 	
 	this.window.focus();
