@@ -192,20 +192,6 @@ elRTE = function(target, opts) {
 		}
 	});
 	
-	$(this.doc.body).bind('dragend', function(e) {
-		setTimeout(function() {
-			try {
-				self.window.focus();
-				var bm = self.selection.getBookmark();
-				self.selection.moveToBookmark(bm);
-				self.ui.update();
-			} catch(e) { }
-			
-			
-		}, 200);
-		
-	});
-	
 	this.typing = false;
 	this.lastKey = null;
 	/* update buttons on click and keyup */
@@ -246,6 +232,11 @@ elRTE = function(target, opts) {
 			}
 			self.lastKey = e.keyCode;
 			self.typing = false;
+		}
+
+		if (e.keyCode == 32 && $.browser.opera) {
+			self.selection.insertNode(self.doc.createTextNode(" "));
+			return false
 		}
 
 	})
@@ -322,6 +313,15 @@ elRTE = function(target, opts) {
 		this.target.show().parents('form').unbind('submit.elfinder');
 	}
 	
+}
+
+/**
+ * Return localization
+ *
+ * @return eli18n
+ **/
+elRTE.prototype.getI18n = function() {
+	return this._i18n;
 }
 
 /**
